@@ -10,6 +10,8 @@ client = AsyncIOMotorClient(MONGO_DETAILS)
 # Veritabanı ve koleksiyonlar
 database = client.screen_tracker
 tenants_collection = database.get_collection("tenants")
+users_collection = database.get_collection("users")
+sessions_collection = database.get_collection("sessions")
 screens_collection = database.get_collection("screens")
 events_collection = database.get_collection("events")
 
