@@ -11,9 +11,11 @@ client = AsyncIOMotorClient(MONGO_DETAILS)
 database = client.screen_tracker
 tenants_collection = database.get_collection("tenants")
 users_collection = database.get_collection("users")
+projects_collection = database.get_collection("projects")
 sessions_collection = database.get_collection("sessions")
 screens_collection = database.get_collection("screens")
 events_collection = database.get_collection("events")
+invitation_tokens_collection = database.get_collection("invitation_tokens")
 
 # BSON ObjectId'yi string'e çeviren yardımcı fonksiyon
 def object_id_to_str(obj_id):

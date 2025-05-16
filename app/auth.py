@@ -4,7 +4,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from app.database import tenants_collection, users_collection
+from app.database import tenants_collection, users_collection, projects_collection
 from app.schemas import TokenData, UserRole
 
 # JWT ayarları
@@ -79,4 +79,24 @@ async def get_current_developer(current_user: dict = Depends(get_current_user)):
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough permissions"
         )
-    return current_user 
+    return current_user
+
+async def verify_project_access(tenant_id: str, project_id: str, bundle_id: str):
+    """Proje erişimini tenant_id, project_id ve bundle_id ile doğrular"""
+    project = await projects_collection.find_one({
+        "id": project_id,
+        "tenant_id": tenant_id,
+        "bundle_id": bundle_id,
+        "is_active": True
+    })
+    if not project:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid project access"
+        )
+    return project
+
+# JWT olmadan proje bazlı doğrulama için yeni fonksiyon
+async def verify_project_auth(tenant_id: str, project_id: str, bundle_id: str):
+    """JWT olmadan proje bazlı doğrulama yapar"""
+    return await verify_project_access(tenant_id, project_id, bundle_id) 
