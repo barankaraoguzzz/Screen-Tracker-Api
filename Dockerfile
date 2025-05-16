@@ -26,9 +26,9 @@ COPY . .
 # Set environment variables
 ENV PYTHONPATH=/app
 
-# ✅ Create a shell script to start the application (NOTE THE ESCAPED $PORT)
-RUN echo '#!/bin/bash\nexec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}' > /app/start.sh && \
+# Create a shell script to start the application
+RUN echo '#!/bin/bash\nexec uvicorn app.main:app --host 0.0.0.0 --port "$PORT"' > /app/start.sh && \
     chmod +x /app/start.sh
 
 # Run the application
-CMD ["/app/start.sh"]
+CMD ["/bin/bash", "/app/start.sh"]
