@@ -23,3 +23,37 @@ go.work.sum
 
 # env file
 .env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.mypy_cache/
+.pytest_cache/
+
+# Environment
+.env.*
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# MacOS
+.DS_Store
+
+# Logs
+*.log
+
+# Test coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# Deployment
+pip.conf
+runtime.txt
+Procfile
