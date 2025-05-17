@@ -9,25 +9,22 @@ RUN apt-get update && apt-get install -y \
     libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first to leverage Docker cache
 COPY requirements.txt .
 
-# Create and activate virtual environment
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application
 COPY . .
 
-# Set environment variables
+# Set environment variable
 ENV PYTHONPATH=/app
 
-# Make start script executable
-RUN chmod +x /app/start.sh
+# Copy the start.sh script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-# Run the application
-CMD ["/bin/bash", "/app/start.sh"]
+# Use shell form to ensure $PORT is interpreted
+CMD ["/bin/bash", "/start.sh"]
