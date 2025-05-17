@@ -37,7 +37,7 @@ router = APIRouter()
 async def register_tenant(tenant: TenantCreate):
     """Yeni bir tenant kaydı oluşturur"""
     # Email kontrolü
-    existing_tenant = await tenants_collection.find_one({"email": tenant.email})
+    existing_tenant = await tenants_collection.find_one({"email": tenant.owner_email})
     if existing_tenant:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -50,6 +50,7 @@ async def register_tenant(tenant: TenantCreate):
         "id": tenant_id,
         "name": tenant.name,
         "description": tenant.description,
+        "email": tenant.owner_email,  # owner_email'i email olarak kaydet
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow()
     }
