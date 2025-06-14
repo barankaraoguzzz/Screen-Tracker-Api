@@ -15,32 +15,12 @@ app = FastAPI(
 )
 
 # CORS ayarları
-origins = [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "http://localhost:3000",
-    "https://peekevent.xyz",
-    "http://peekevent.xyz"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],
-    allow_headers=[
-        "Content-Type",
-        "Authorization",
-        "Accept",
-        "Origin",
-        "X-Requested-With",
-        "X-Tenant-Id",
-        "X-Project-Id",
-        "X-Bundle-Id"
-    ],
-    expose_headers=["*"],
-    max_age=3600,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # HTTPS proxy bilgilerini ve güvenilir domainleri tanımla
