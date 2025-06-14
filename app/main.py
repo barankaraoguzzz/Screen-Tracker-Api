@@ -33,7 +33,8 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],
     allow_headers=["*"],
-    expose_headers=["*"]
+    expose_headers=["*"],
+    max_age=600  # Preflight isteklerinin önbellek süresi
 )
 
 # HTTPS proxy bilgilerini ve güvenilir domainleri tanımla
