@@ -131,4 +131,24 @@ class InvitationToken(BaseModel):
     role: UserRole
     project_ids: List[str]
     expires_at: datetime
-    is_used: bool = False 
+    is_used: bool = False
+
+# Screen modelleri
+class ScreenBase(BaseModel):
+    name: str
+    project_id: str
+
+class ScreenCreate(ScreenBase):
+    image: str  # Base64 encoded image
+
+class ScreenResponse(ScreenBase):
+    id: str
+    token: str
+    image_url: str
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        json_encoders = {
+            datetime: lambda v: v.isoformat()
+        } 
