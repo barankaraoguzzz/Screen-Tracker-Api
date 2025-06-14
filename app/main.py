@@ -14,19 +14,21 @@ app = FastAPI(
     openapi_url="/openapi.json"
 )
 
+# CORS ayarları
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "https://peekevent.xyz", "http://peekevent.xyz"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=3600,
+)
+
 # HTTPS proxy bilgilerini ve güvenilir domainleri tanımla
 app.add_middleware(
     TrustedHostMiddleware,
     allowed_hosts=["peekevent.xyz", "*.peekevent.xyz", "localhost"]
-)
-
-# CORS ayarları
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Production'da spesifik origin'ler belirtilmeli
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
 )
 
 # Middleware ekleme
