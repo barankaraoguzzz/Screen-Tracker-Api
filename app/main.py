@@ -3,8 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import events, sessions, auth, projects
 from app.middleware import error_handling_middleware
 from app.auth import get_current_user
-from starlette.middleware.proxy_headers import ProxyHeadersMiddleware
-from starlette.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
 app = FastAPI(
     title="Screen Tracker API",
@@ -16,7 +15,6 @@ app = FastAPI(
 )
 
 # HTTPS proxy bilgilerini ve güvenilir domainleri tanımla
-app.add_middleware(ProxyHeadersMiddleware)
 app.add_middleware(
     TrustedHostMiddleware,
     allowed_hosts=["peekevent.xyz", "*.peekevent.xyz", "localhost"]
