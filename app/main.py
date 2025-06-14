@@ -19,8 +19,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "https://peekevent.xyz", "http://peekevent.xyz"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],
+    allow_headers=["*", "Authorization", "Content-Type", "X-Tenant-Id", "X-Project-Id", "X-Bundle-Id"],
     expose_headers=["*"],
     max_age=3600,
 )
