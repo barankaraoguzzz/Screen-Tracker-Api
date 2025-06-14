@@ -2,7 +2,6 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Sistem bağımlılıklarını kur
 RUN apt-get update && apt-get install -y \
     gcc \
     pkg-config \
@@ -15,12 +14,11 @@ RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt \
+    gunicorn
 
 COPY . .
 
-# Ortam değişkeni
 ENV PYTHONPATH=/app
 
-# DOĞRUDAN Uvicorn'u başlat (start.sh olmadan)
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--proxy-headers"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:8080", "--forwarded-allow-ips", "*"]
